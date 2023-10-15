@@ -1,0 +1,123 @@
+
+/**
+ * Write a description of class Bestellung here.
+ *
+ * @Gruppe 01 (Janina Zoë Böhme, Linda Fuchs, Pablo Maria Serafin Dostal, Pascal Bähler, Stefanie Rehm)
+ * @version (11.10.2023)
+ */
+
+import java.util.ArrayList;
+
+public class Bestellung {
+    private ArrayList<Produkt> bestellteProdukte;
+    private boolean bestellBestaetigung;
+    private int bestellungsNr;
+    private int beschaffungsZeit;
+    private int anzahlStuehle;
+    private int anzahlSofas;
+
+    /**
+     * Konstruktor zur Erstellung von Bestellungsobjekten. Dieser wird in der Klasse Fabrik aufgerufen.
+     * Die Parameter umfassen die Bestellbestätigung vom Typ boolean, die Bestellungsnummer vom Typ int,
+     * die Anzahl der Stühle und Sofas vom Typ int. Jede Bestellung enthält außerdem eine ArrayList von Produkten.
+     * In dieser ArrayList werden Objekte der bestellten Stühle und Sofas mithilfe von Schleifen hinzugefügt.
+     * Diese Objekte werden innerhalb der Schleifen initialisiert. Schließlich wird die Gesamtbeschaffungszeit der Bestellung
+     * berechnet, indem die Produktionszeiten aller einzelnen Produkte (Stühle & Sofas) addiert werden.
+     * Dies erfolgt über Polymorphismus, da Produkt die Oberklasse der Unterklassen Stuhl und Sofa ist,
+     * und die Methode getProduktionsZeit() in Produkt definiert und in den Unterklassen implementiert ist.
+     */
+    public Bestellung(boolean bestellBestaetigung, int bestellungsNr, int anzahlStuehle, int anzahlSofas) {
+        this.bestellteProdukte = new ArrayList<Produkt>();
+        this.bestellBestaetigung = bestellBestaetigung;
+        this.bestellungsNr = bestellungsNr;
+        this.anzahlStuehle = anzahlStuehle;
+        this.anzahlSofas = anzahlSofas;
+
+        // Objekte der bestellten Stühle und Sofas werden mithilfe von parameterlosen Konstruktoren instanziiert
+        for (int i = 0; i < anzahlStuehle; i++) {
+            bestellteProdukte.add(new Stuhl());
+        }
+
+        for (int i = 0; i < anzahlSofas; i++) {
+            bestellteProdukte.add(new Sofa());
+        }
+
+    }
+
+    /**
+     * Gibt die bestellten Produkte einer Bestellung als ArrayList von Produktobjekten zurück.
+     * Diese ArrayList enthält Objekte verschiedener Produkte (aktuell Sofa/Stuhl).
+     */
+    public ArrayList<Produkt> getBestellteProdukte() {
+        return bestellteProdukte;
+    }
+
+    /**
+     * Bestätigt eine Bestellung, indem das Datenfeld "bestellBesaetigung" auf true gesetzt wird.
+     */
+    public void bestellungBestaetigen() {
+        bestellBestaetigung = true;
+    }
+
+    /**
+     * Gibt den Bestätigungsstatus einer Bestellung als boolean (true oder false) zurück,
+     * um ihn beispielsweise in der Methode "bestellungenAusgeben()" der Klasse Fabrik auf der Konsole anzuzeigen.
+     */
+    public boolean getBestellBestaetigung() {
+        return bestellBestaetigung;
+    }
+
+    /**
+     * Ermöglicht die manuelle Anpassung der Beschaffungszeit einer Bestellung basierend auf dem übergebenen Integer-Parameter "beschaffungsZeit".
+     * Diese Funktion kann nützlich sein, falls es Verzögerungen oder Probleme bei der Bestellung gibt.
+     * Die Methode gibt keinen Wert zurück.
+     */
+    public void setzeBeschaffungsZeit(int beschaffungsZeit) {
+        this.beschaffungsZeit = beschaffungsZeit;
+    }
+
+    /**
+     * Gibt die Beschaffungszeit einer Bestellung als Integer zurück,
+     * um sie beispielsweise in der Methode "bestellungenAusgeben()" der Klasse Fabrik auf der Konsole anzuzeigen.
+     * Die Beschaffungszeit wird bei der Initialisierung einer Bestellung (siehe Konstruktor) berechnet.
+     */
+    public int getBeschaffungsZeit() {
+        return beschaffungsZeit;
+    }
+
+    /**
+     * Gibt die Bestellungsnummer einer Bestellung als Integer zurück,
+     * um sie beispielsweise in der Methode "bestellungenAusgeben()" der Klasse Fabrik auf der Konsole anzuzeigen.
+     */
+    public int getBestellungsNr() {
+        return bestellungsNr;
+    }
+
+    /**
+     * Gibt die Anzahl der bestellten Stühle einer Bestellung als Integer zurück,
+     * um sie beispielsweise in der Methode "bestellungenAusgeben()" der Klasse Fabrik auf der Konsole anzuzeigen.
+     */
+    public int getAnzahlStuehle() {
+        return anzahlStuehle;
+    }
+
+    /**
+     * Gibt die Anzahl der bestellten Sofas einer Bestellung als Integer zurück,
+     * um sie beispielsweise in der Methode "bestellungenAusgeben()" der Klasse Fabrik auf der Konsole anzuzeigen.
+     */
+    public int getAnzahlSofas() {
+        return anzahlSofas;
+    }
+
+    /**
+     * Überschreibt die Standard-toString-Methode, um eine gut formatierte Zeichenfolge der Bestellung zurückzugeben.
+     */
+    @Override
+    public String toString() {
+        return "Bestellung mit " + anzahlStuehle + " Stühlen und " +
+                anzahlSofas + " Sofas.\n" +
+                "Bestellungsnummer: " + bestellungsNr + "\n" +
+                "Beschaffungszeit: " + beschaffungsZeit + " Minuten\n" +
+                "Bestellung ist " + (bestellBestaetigung ? "bestätigt" : "nicht bestätigt");
+    }
+}
